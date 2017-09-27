@@ -1,6 +1,7 @@
 import { IBot, IBotConfig, ILogger } from './api'
 import { Bot } from './bot'
 import { ChoiceCommand } from './commands/choice'
+import { GrowlCommand } from './commands/growl'
 import { HaipItNewsCommand } from './commands/haipit-news'
 import { HelpCommand } from './commands/help'
 import { KekCommand } from './commands/kek'
@@ -23,6 +24,7 @@ const startup = async () => {
         .addCommand(new HelpCommand())
         .addCommand(new HaipItNewsCommand())
         .addCommand(new WikiCommand())
+        .addCommand(new GrowlCommand())
         .addCommand(new KekCommand())
         .addCommand(new ChoiceCommand())
         .addCommand(new KillCommand())

@@ -15,7 +15,7 @@ export class ChoiceCommand implements IBotCommand {
     }
     public async run(msg: string, answer: IBotMessage): Promise<void> {
         if (msg.toLowerCase().split(' или ').length > 2) {
-            answer.setTextOnly('не могу выбрать, предложи из них два варианта, я подумаю.')
+            answer.setTextOnly('сложный выбор. Предложи два варианта и я определюсь.')
             return
         }
         const matches = msg.match(this.CMD_REGEXP)!

@@ -14,6 +14,10 @@ export class ChoiceCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     public async run(msg: string, answer: IBotMessage): Promise<void> {
+        if (msg.toLowerCase().split(' или ').length > 2) {
+            answer.setTextOnly('сложный выбор. Предложи два варианта и я определюсь.')
+            return
+        }
         const matches = msg.match(this.CMD_REGEXP)!
         answer.setTextOnly(getRandomInt(1, 100) > 50 ? matches[1] : matches[2])
     }

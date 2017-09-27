@@ -32,11 +32,11 @@ export class HaipItNewsCommand implements IBotCommand {
         const cmdMatches = msg.match(this.CMD_REGEXP)!
         const keywords = msg.substr(cmdMatches[0].length).trim()
         try {
-            const url = keywords ? `${this.API_URL}find?keywords=${keywords}` : `${this.API_URL}news/random`
+            const url = keywords ? `${this.API_URL}find?limit=${this.LIMIT}&keywords=${keywords}` : `${this.API_URL}news/random`
             const response = await fetch(url, { timeout: this.TIMEOUT })
             const rawData = await response.json()
-            if (rawData) {
-                const newsList = !keywords ? [rawData as INewsItem] : rawData as INewsItem[]
+            if (rawData && rawData.result) {
+                const newsList = rawData.result as INewsItem[]
                 const max = Math.min(this.LIMIT, newsList.length)
                 for (let i = 0; i < max; i++) {
                     answer.addField(newsList[i].url, newsList[i].title)

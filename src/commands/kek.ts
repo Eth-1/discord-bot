@@ -12,7 +12,7 @@ export class KekCommand implements IBotCommand {
     ]
 
     public help(): IBotCommandHelp {
-        return { caption: 'kek / кек', description: 'Выводит случайны ответ на кек.' }
+        return { caption: 'kek / кек', description: 'Выводит случайный ответ на кек.' }
     }
 
     public init(bot: IBot): void { }

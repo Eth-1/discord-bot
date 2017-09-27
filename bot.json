@@ -1,0 +1,4 @@
+{
+    "game": "супер-бота",
+    "token": "create bot.prod.json at same folder and put discord token to 'token' property inside"
+}

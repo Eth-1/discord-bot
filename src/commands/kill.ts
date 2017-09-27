@@ -1,7 +1,7 @@
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 
 export class KillCommand implements IBotCommand {
-    private readonly CMD_REGEXP = /^\/(kill|убить) ([^ ]+)/im
+    private readonly CMD_REGEXP = /^\/(kill|убить)(?: |$)/im
     private _bot: IBot
 
     public help(): IBotCommandHelp {
@@ -17,8 +17,8 @@ export class KillCommand implements IBotCommand {
     }
 
     public async run(msg: string, answer: IBotMessage): Promise<void> {
-        const matches = msg.match(this.CMD_REGEXP)!
-        const userName = matches[2].trim()
+        const cmdMatches = msg.match(this.CMD_REGEXP)!
+        const userName = msg.substr(cmdMatches[0].length).trim()
         if (userName) {
             answer.setTextOnly(`заказ принят. ${userName} - умри, жывотнайе!`)
         }

@@ -33,7 +33,6 @@ export class HaipItNewsCommand implements IBotCommand {
         const keywords = msg.substr(cmdMatches[0].length).trim()
         try {
             const url = keywords ? `${this.API_URL}find?limit=${this.LIMIT}&keywords=${keywords}` : `${this.API_URL}news/random`
-            console.log(url)
             const response = await fetch(url, { timeout: this.TIMEOUT })
             const rawData = await response.json()
             if (rawData && rawData.result) {

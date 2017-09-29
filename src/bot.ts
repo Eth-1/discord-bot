@@ -16,17 +16,14 @@ export class Bot implements IBot {
         return this._commands
     }
 
-    public addCommand(command: IBotCommand) {
-        if (command) {
-            command.init(this)
-            this._commands.push(command)
-        }
-        return this
-    }
-
-    public start(logger: ILogger, config: IBotConfig) {
+    public start(logger: ILogger, config: IBotConfig, commandsPath: string) {
         this._logger = logger
         this._config = config
+
+        this.loadCommands(commandsPath)
+
+        if (!this._config.token) { throw new Error('invalid discord token') }
+
         this._client = new discord.Client()
 
         this._client.on('ready', () => {
@@ -58,13 +55,19 @@ export class Bot implements IBot {
             }
         })
 
-        // this._client.on('guildMemberAdd', (member) => {
-        //     const channel = member.guild.channels.find('name', 'member-log')
-        //     if (channel) {
-        //         member.send(`Welcome to the server, ${member}`)
-        //     }
-        // })
-
         this._client.login(this._config.token)
+    }
+
+    private loadCommands(commandsPath: string) {
+        if (!this._config.commands || !Array.isArray(this._config.commands) || this._config.commands.length === 0) {
+            throw new Error('Invalid / empty commands list')
+        }
+        for (const cmdName of this._config.commands) {
+            const cmdClass = require(`${commandsPath}/${cmdName}`).default
+            const command = new cmdClass() as IBotCommand
+            command.init(this)
+            this._commands.push(command)
+            this._logger.info(`command "${cmdName}" loaded...`)
+        }
     }
 }

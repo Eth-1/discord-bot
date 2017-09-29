@@ -326,7 +326,7 @@ const MOUNTAINS: IMountain[] = [
     }
 ].sort((a, b) => a.height - b.height)
 
-export class GrowlCommand implements IBotCommand {
+export default class GrowlCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\/(ор)(?: |$)/im
 
     public help(): IBotCommandHelp {

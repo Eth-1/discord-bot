@@ -6,7 +6,7 @@ interface INewsItem {
     url: string
 }
 
-export class HaipItNewsCommand implements IBotCommand {
+export default class HaipItNewsCommand implements IBotCommand {
     private readonly API_URL = 'https://api.haipit.news/api/v1/'
     private readonly CMD_REGEXP = /^\/(news|новости)(?: |$)/im
     private readonly TIMEOUT = 5000

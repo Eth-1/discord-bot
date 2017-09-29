@@ -1,6 +1,6 @@
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 
-export class HelpCommand implements IBotCommand {
+export default class HelpCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\/(help|помощь)(?: |$)/im
     private _bot: IBot
 

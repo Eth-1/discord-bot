@@ -1,6 +1,6 @@
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 
-export class KillCommand implements IBotCommand {
+export default class KillCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\/(kill|убить)(?: |$)/im
     private _bot: IBot
 

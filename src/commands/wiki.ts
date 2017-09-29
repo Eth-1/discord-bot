@@ -4,7 +4,7 @@ import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 
 interface IWikiList { [key: string]: { title: string, fullurl: string } }
 
-export class WikiCommand implements IBotCommand {
+export default class WikiCommand implements IBotCommand {
     private readonly API_URL = '.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&titles='
     private readonly CMD_REGEXP = /^\/(wiki|вики)(?: |$)/im
     private readonly TIMEOUT = 5000

@@ -1,4 +1,15 @@
 {
     "game": "супер-бота",
+    "commands": [
+        "help",
+        "haipit-news",
+        "wiki",
+        "choice",
+        "kek",
+        "kill",
+        "growl",
+        "random-number",
+        "sources"
+    ],
     "token": "create bot.prod.json at same folder and put discord token to 'token' property inside"
 }

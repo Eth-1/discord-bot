@@ -1,6 +1,6 @@
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 
-export class SourcesCommand implements IBotCommand {
+export default class SourcesCommand implements IBotCommand {
     private _link: string
 
     public help(): IBotCommandHelp {

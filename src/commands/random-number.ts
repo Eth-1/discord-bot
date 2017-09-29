@@ -1,6 +1,6 @@
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 
-export class RandomNumberCommand implements IBotCommand {
+export default class RandomNumberCommand implements IBotCommand {
     private readonly CMD_REGEXP = /^\/getrandomnumber(?: |$)/im
 
     public help(): IBotCommandHelp {

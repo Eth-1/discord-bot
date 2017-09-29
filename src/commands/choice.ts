@@ -1,7 +1,7 @@
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 import { getRandomInt } from '../utils'
 
-export class ChoiceCommand implements IBotCommand {
+export default class ChoiceCommand implements IBotCommand {
     private readonly CMD_REGEXP = /(.+)(?: или )(.+)/i
 
     public help(): IBotCommandHelp {

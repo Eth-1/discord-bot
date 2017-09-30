@@ -9,6 +9,7 @@
         "kill",
         "growl",
         "random-number",
+        "fsb",
         "sources"
     ],
     "token": "create bot.prod.json at same folder and put discord token to 'token' property inside"

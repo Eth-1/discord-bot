@@ -4,17 +4,19 @@ import { IBot, IBotCommand, IBotConfig, ILogger } from './api'
 import { BotMessage } from './message'
 
 export class Bot implements IBot {
+    public get commands(): IBotCommand[] { return this._commands }
+
     public get logger() { return this._logger }
+
+    public get allUsers() { return this._client ? this._client.users.array().filter((i) => i.id !== '1') : [] }
+
+    public get onlineUsers() { return this.allUsers.filter((i) => i.presence.status !== 'offline') }
 
     private readonly _commands: IBotCommand[] = []
     private _client: discord.Client
     private _config: IBotConfig
     private _logger: ILogger
     private _botId: string
-
-    public getCommands(): IBotCommand[] {
-        return this._commands
-    }
 
     public start(logger: ILogger, config: IBotConfig, commandsPath: string) {
         this._logger = logger

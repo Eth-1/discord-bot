@@ -18,7 +18,7 @@ export default class HelpCommand implements IBotCommand {
 
     public async run(msg: string, answer: IBotMessage): Promise<void> {
         answer.setTitle('Список поддерживаемых команд:')
-        for (const cmd of this._bot.getCommands()) {
+        for (const cmd of this._bot.commands) {
             const help = cmd.help()
             answer.addField(help.caption, help.description)
         }

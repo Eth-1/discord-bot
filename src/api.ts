@@ -22,8 +22,10 @@ export interface IBotCommandHelp {
 }
 
 export interface IBot {
+    readonly commands: IBotCommand[]
     readonly logger: ILogger
-    getCommands(): IBotCommand[]
+    readonly allUsers: IUser[]
+    readonly onlineUsers: IUser[]
     start(logger: ILogger, config: IBotConfig, rootPath: string): void
 }
 
@@ -32,6 +34,13 @@ export interface IBotCommand {
     init(bot: IBot): void
     test(msg: string): boolean
     run(msg: string, answer: IBotMessage): Promise<void>
+}
+
+export interface IUser {
+    id: string
+    username: string
+    discriminator: string
+    tag: string
 }
 
 type MessageColor =

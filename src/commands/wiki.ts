@@ -11,22 +11,22 @@ export default class WikiCommand implements IBotCommand {
     private readonly LIMIT = 5
     private _bot: IBot
 
-    public help(): IBotCommandHelp {
+    public getHelp(): IBotCommandHelp {
         return {
             caption: '/wiki /вики {ключевые слова}',
             description: 'Поиск по википедии: /wiki - по английской, /вики - по русской.'
         }
     }
 
-    public init(bot: IBot): void {
+    public init(bot: IBot, dataPath: string): void {
         this._bot = bot
     }
 
-    public test(msg: string): boolean {
+    public isValid(msg: string): boolean {
         return this.CMD_REGEXP.test(msg)
     }
 
-    public async run(msg: string, answer: IBotMessage): Promise<void> {
+    public async process(msg: string, answer: IBotMessage): Promise<void> {
         const matches = msg.match(this.CMD_REGEXP)!
         const keywords = msg.substr(matches[0].length).trim()
         if (!keywords) {

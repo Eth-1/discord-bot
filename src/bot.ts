@@ -1,5 +1,6 @@
 import * as discord from 'discord.js'
 import { RichEmbed } from 'discord.js'
+import * as path from 'path'
 import { IBot, IBotCommand, IBotConfig, ILogger } from './api'
 import { BotMessage } from './message'
 
@@ -18,11 +19,11 @@ export class Bot implements IBot {
     private _logger: ILogger
     private _botId: string
 
-    public start(logger: ILogger, config: IBotConfig, commandsPath: string) {
+    public start(logger: ILogger, config: IBotConfig, commandsPath: string, dataPath: string) {
         this._logger = logger
         this._config = config
 
-        this.loadCommands(commandsPath)
+        this.loadCommands(commandsPath, dataPath)
 
         if (!this._config.token) { throw new Error('invalid discord token') }
 
@@ -43,9 +44,9 @@ export class Bot implements IBot {
                 this._logger.debug(`[${message.author.tag}] ${text}`)
                 for (const cmd of this._commands) {
                     try {
-                        if (cmd.test(text)) {
+                        if (cmd.isValid(text)) {
                             const answer = new BotMessage()
-                            await cmd.run(text, answer)
+                            await cmd.process(text, answer)
                             message.reply(answer.text || { embed: answer.richText })
                             break
                         }
@@ -60,14 +61,14 @@ export class Bot implements IBot {
         this._client.login(this._config.token)
     }
 
-    private loadCommands(commandsPath: string) {
+    private loadCommands(commandsPath: string, dataPath: string) {
         if (!this._config.commands || !Array.isArray(this._config.commands) || this._config.commands.length === 0) {
             throw new Error('Invalid / empty commands list')
         }
         for (const cmdName of this._config.commands) {
             const cmdClass = require(`${commandsPath}/${cmdName}`).default
             const command = new cmdClass() as IBotCommand
-            command.init(this)
+            command.init(this, path.resolve(`${dataPath}/${cmdName}`))
             this._commands.push(command)
             this._logger.info(`command "${cmdName}" loaded...`)
         }

@@ -14,22 +14,22 @@ export default class HaipItNewsCommand implements IBotCommand {
     private readonly LIMIT = 5
     private _bot: IBot
 
-    public help(): IBotCommandHelp {
+    public getHelp(): IBotCommandHelp {
         return {
             caption: '/news /новости [ключевые слова]',
             description: 'Новости с haipit.news. Если не указаны ключевые слова - будет показана одна случайная новость.'
         }
     }
 
-    public init(bot: IBot): void {
+    public init(bot: IBot, dataPath: string): void {
         this._bot = bot
     }
 
-    public test(msg: string): boolean {
+    public isValid(msg: string): boolean {
         return this.CMD_REGEXP.test(msg)
     }
 
-    public async run(msg: string, answer: IBotMessage): Promise<void> {
+    public async process(msg: string, answer: IBotMessage): Promise<void> {
         const cmdMatches = msg.match(this.CMD_REGEXP)!
         const keywords = msg.substr(cmdMatches[0].length).trim()
         try {

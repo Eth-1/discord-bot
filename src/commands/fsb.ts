@@ -7,20 +7,20 @@ export default class FsbCommand implements IBotCommand {
     private _bot: IBot
     private _agent: IUser
 
-    public help(): IBotCommandHelp {
+    public getHelp(): IBotCommandHelp {
         return { caption: '/fsb /фсб /гебня /гэбня', description: 'Выводит текущего агента фсб, обновляется раз в сутки.' }
     }
 
-    public init(bot: IBot): void {
+    public init(bot: IBot, dataPath: string): void {
         this._bot = bot
         setInterval(this.findAgent.bind(this), this.TIMEOUT)
     }
 
-    public test(msg: string): boolean {
+    public isValid(msg: string): boolean {
         return this.CMD_REGEXP.test(msg)
     }
 
-    public async run(msg: string, answer: IBotMessage): Promise<void> {
+    public async process(msg: string, answer: IBotMessage): Promise<void> {
         if (!this._agent) {
             this.findAgent()
         }

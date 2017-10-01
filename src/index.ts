@@ -11,4 +11,4 @@ try {
     logger.info('no production config found...')
 }
 
-new Bot().start(logger, cfg, `${__dirname}/commands`)
+new Bot().start(logger, cfg, `${__dirname}/commands`, `${__dirname}/../data`)

@@ -26,14 +26,14 @@ export interface IBot {
     readonly logger: ILogger
     readonly allUsers: IUser[]
     readonly onlineUsers: IUser[]
-    start(logger: ILogger, config: IBotConfig, rootPath: string): void
+    start(logger: ILogger, config: IBotConfig, commandsPath: string, dataPath: string): void
 }
 
 export interface IBotCommand {
-    help(): IBotCommandHelp
-    init(bot: IBot): void
-    test(msg: string): boolean
-    run(msg: string, answer: IBotMessage): Promise<void>
+    getHelp(): IBotCommandHelp
+    init(bot: IBot, dataPath: string): void
+    isValid(msg: string): boolean
+    process(msg: string, answer: IBotMessage): Promise<void>
 }
 
 export interface IUser {

@@ -19,8 +19,6 @@ export default class KillCommand implements IBotCommand {
     public async process(msg: string, answer: IBotMessage): Promise<void> {
         const cmdMatches = msg.match(this.CMD_REGEXP)!
         const userName = msg.substr(cmdMatches[0].length).trim()
-        if (userName) {
-            answer.setTextOnly(`заказ принят. ${userName} - умри, жывотнайе!`)
-        }
+        answer.setTextOnly(userName ? `заказ принят. ${userName} - умри, жывотнайе!` : 'тут нет таких.')
     }
 }

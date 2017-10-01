@@ -8,24 +8,24 @@ interface IMountain {
 }
 
 export default class GrowlCommand implements IBotCommand {
-    private readonly CMD_REGEXP = /^\/(ор)(?: |$)/im
-    private mountains: IMountain[]
+    private readonly CMD_REGEXP = /^\/(growl|or|ор)(?: |$)/im
+    private _mountains: IMountain[]
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '/ор', description: 'Показывает уровень ора.' }
+        return { caption: '/ор /or / growl', description: 'Показывает уровень ора.' }
     }
 
     public init(bot: IBot, dataPath: string): void {
-        this.mountains = (require(`${dataPath}/mountains.json`) as IMountain[]).sort((a, b) => a.height - b.height)
+        this._mountains = (require(`${dataPath}`) as IMountain[]).sort((a, b) => a.height - b.height)
     }
 
     public isValid(msg: string): boolean {
         return this.CMD_REGEXP.test(msg)
     }
     public async process(msg: string, answer: IBotMessage): Promise<void> {
-        const id = getRandomInt(0, this.mountains.length)
-        const low = id > 0 ? this.mountains[id - 1] : undefined
-        const hi = id < this.mountains.length - 1 ? this.mountains[id + 1] : undefined
+        const id = getRandomInt(0, this._mountains.length)
+        const low = id > 0 ? this._mountains[id - 1] : undefined
+        const hi = id < this._mountains.length - 1 ? this._mountains[id + 1] : undefined
         if (!hi) {
             if (low && low.img) {
                 answer.setImage(low.img)
@@ -38,8 +38,8 @@ export default class GrowlCommand implements IBotCommand {
         }
         if (!low) {
             answer.setDescription('Ваш ор ниже всех гор!')
-            return
+        } else {
+            answer.setDescription(`Ваш ор выше "${low.name}" (${low.height}м) и ниже "${hi.name}" (${hi.height}м)!`)
         }
-        answer.setDescription(`Ваш ор выше "${low.name}" (${low.height}м) и ниже "${hi.name}" (${hi.height}м)!`)
     }
 }

@@ -8,6 +8,7 @@ interface INewsItem {
 
 export default class HaipItNewsCommand implements IBotCommand {
     private readonly API_URL = 'https://api.haipit.news/api/v1/'
+    private readonly PLATFORM = 'discord-bot'
     private readonly CMD_REGEXP = /^\/(news|новости)(?: |$)/im
     private readonly TIMEOUT = 5000
     private readonly LIMIT = 5
@@ -32,10 +33,12 @@ export default class HaipItNewsCommand implements IBotCommand {
         const cmdMatches = msg.match(this.CMD_REGEXP)!
         const keywords = msg.substr(cmdMatches[0].length).trim()
         try {
-            const url = keywords ? `${this.API_URL}find?limit=${this.LIMIT}&keywords=${keywords}` : `${this.API_URL}news/random`
+            const url = keywords ?
+                `${this.API_URL}find?platform=${this.PLATFORM}&limit=${this.LIMIT}&keywords=${keywords}` :
+                `${this.API_URL}news/random`
             const response = await fetch(url, { timeout: this.TIMEOUT })
             const rawData = await response.json()
-            if (rawData && rawData.result) {
+            if (rawData && Array.isArray(rawData.result) && rawData.result.length > 0) {
                 const newsList = rawData.result as INewsItem[]
                 const max = Math.min(this.LIMIT, newsList.length)
                 for (let i = 0; i < max; i++) {

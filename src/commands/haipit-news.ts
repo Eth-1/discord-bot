@@ -1,4 +1,5 @@
-import fetch, { Request } from 'node-fetch'
+import fetch from 'node-fetch'
+import * as qs from 'querystring'
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 
 interface INewsItem {
@@ -34,7 +35,7 @@ export default class HaipItNewsCommand implements IBotCommand {
         const keywords = msg.substr(cmdMatches[0].length).trim()
         try {
             const url = keywords ?
-                `${this.API_URL}find?platform=${this.PLATFORM}&limit=${this.LIMIT}&keywords=${keywords}` :
+                `${this.API_URL}find?platform=${this.PLATFORM}&limit=${this.LIMIT}&keywords=${qs.escape(keywords)}` :
                 `${this.API_URL}news/random`
             const response = await fetch(url, { timeout: this.TIMEOUT })
             const rawData = await response.json()

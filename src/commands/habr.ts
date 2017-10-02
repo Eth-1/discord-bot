@@ -3,11 +3,6 @@ import fetch from 'node-fetch'
 import * as qs from 'querystring'
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 
-interface INewsItem {
-    title: string
-    url: string
-}
-
 export default class HabrCommand implements IBotCommand {
     private readonly API_URL1 = 'https://habrahabr.ru/search/?q='
     private readonly API_URL2 = 'https://habrahabr.ru/top/'

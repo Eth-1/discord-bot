@@ -12,6 +12,7 @@ export interface ILogger {
 
 export interface IBotConfig {
     token: string
+    commands: string[]
     game?: string
 }
 
@@ -21,43 +22,29 @@ export interface IBotCommandHelp {
 }
 
 export interface IBot {
+    readonly commands: IBotCommand[]
     readonly logger: ILogger
-    getCommands(): IBotCommand[]
-    start(logger: ILogger, config: IBotConfig): void
-    addCommand(command: IBotCommand): IBot
+    readonly allUsers: IUser[]
+    readonly onlineUsers: IUser[]
+    start(logger: ILogger, config: IBotConfig, commandsPath: string, dataPath: string): void
 }
 
 export interface IBotCommand {
-    help(): IBotCommandHelp
-    init(bot: IBot): void
-    test(msg: string): boolean
-    run(msg: string, answer: IBotMessage): Promise<void>
+    getHelp(): IBotCommandHelp
+    init(bot: IBot, dataPath: string): void
+    isValid(msg: string): boolean
+    process(msg: string, answer: IBotMessage): Promise<void>
+}
+
+export interface IUser {
+    id: string
+    username: string
+    discriminator: string
+    tag: string
 }
 
 type MessageColor =
-    'DEFAULT'
-    | 'AQUA'
-    | 'GREEN'
-    | 'BLUE'
-    | 'PURPLE'
-    | 'GOLD'
-    | 'ORANGE'
-    | 'RED'
-    | 'GREY'
-    | 'DARKER_GREY'
-    | 'NAVY'
-    | 'DARK_AQUA'
-    | 'DARK_GREEN'
-    | 'DARK_BLUE'
-    | 'DARK_PURPLE'
-    | 'DARK_GOLD'
-    | 'DARK_ORANGE'
-    | 'DARK_RED'
-    | 'DARK_GREY'
-    | 'LIGHT_GREY'
-    | 'DARK_NAVY'
-    | 'RANDOM'
-    | [number, number, number]
+    [number, number, number]
     | number
     | string
 

@@ -1,10 +1,17 @@
 import * as discord from 'discord.js'
 import { RichEmbed } from 'discord.js'
+import * as path from 'path'
 import { IBot, IBotCommand, IBotConfig, ILogger } from './api'
 import { BotMessage } from './message'
 
 export class Bot implements IBot {
+    public get commands(): IBotCommand[] { return this._commands }
+
     public get logger() { return this._logger }
+
+    public get allUsers() { return this._client ? this._client.users.array().filter((i) => i.id !== '1') : [] }
+
+    public get onlineUsers() { return this.allUsers.filter((i) => i.presence.status !== 'offline') }
 
     private readonly _commands: IBotCommand[] = []
     private _client: discord.Client
@@ -12,21 +19,14 @@ export class Bot implements IBot {
     private _logger: ILogger
     private _botId: string
 
-    public getCommands(): IBotCommand[] {
-        return this._commands
-    }
-
-    public addCommand(command: IBotCommand) {
-        if (command) {
-            command.init(this)
-            this._commands.push(command)
-        }
-        return this
-    }
-
-    public start(logger: ILogger, config: IBotConfig) {
+    public start(logger: ILogger, config: IBotConfig, commandsPath: string, dataPath: string) {
         this._logger = logger
         this._config = config
+
+        this.loadCommands(commandsPath, dataPath)
+
+        if (!this._config.token) { throw new Error('invalid discord token') }
+
         this._client = new discord.Client()
 
         this._client.on('ready', () => {
@@ -44,9 +44,9 @@ export class Bot implements IBot {
                 this._logger.debug(`[${message.author.tag}] ${text}`)
                 for (const cmd of this._commands) {
                     try {
-                        if (cmd.test(text)) {
+                        if (cmd.isValid(text)) {
                             const answer = new BotMessage()
-                            await cmd.run(text, answer)
+                            await cmd.process(text, answer)
                             message.reply(answer.text || { embed: answer.richText })
                             break
                         }
@@ -58,13 +58,19 @@ export class Bot implements IBot {
             }
         })
 
-        // this._client.on('guildMemberAdd', (member) => {
-        //     const channel = member.guild.channels.find('name', 'member-log')
-        //     if (channel) {
-        //         member.send(`Welcome to the server, ${member}`)
-        //     }
-        // })
-
         this._client.login(this._config.token)
+    }
+
+    private loadCommands(commandsPath: string, dataPath: string) {
+        if (!this._config.commands || !Array.isArray(this._config.commands) || this._config.commands.length === 0) {
+            throw new Error('Invalid / empty commands list')
+        }
+        for (const cmdName of this._config.commands) {
+            const cmdClass = require(`${commandsPath}/${cmdName}`).default
+            const command = new cmdClass() as IBotCommand
+            command.init(this, path.resolve(`${dataPath}/${cmdName}`))
+            this._commands.push(command)
+            this._logger.info(`command "${cmdName}" loaded...`)
+        }
     }
 }

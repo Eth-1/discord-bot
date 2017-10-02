@@ -1,12 +1,14 @@
 {
   "name": "discordbot-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple discord bot",
   "main": "dist/index.js",
   "scripts": {
     "watch": "node_modules/.bin/tsc -w",
     "build": "node_modules/.bin/tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "pm2": "pm2 start --name \"discord-bot\" ./dist/index.js",
+    "pm2-docker": "pm2-docker --name \"discord-bot\" ./dist/index.js"
   },
   "keywords": [],
   "author": "Leopotam <leopotam@gmail.com> (https://github.com/Leopotam)",
@@ -16,12 +18,14 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/cheerio": "^0.22.2",
     "@types/node": "^8.0.31",
     "@types/node-fetch": "^1.6.7",
     "tslint": "^5.7.0",
     "typescript": "^2.5.3"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
     "discord.js": "^11.2.1",
     "node-fetch": "^1.7.3"
   }

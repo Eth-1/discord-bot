@@ -8,11 +8,11 @@ interface IMountain {
 }
 
 export default class GrowlCommand implements IBotCommand {
-    private readonly CMD_REGEXP = /^\/(growl|or|ор)(?: |$)/im
+    private readonly CMD_REGEXP = /^(or|ор)(?: |$)/im
     private _mountains: IMountain[]
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '/ор /or / growl', description: 'Показывает уровень ора.' }
+        return { caption: 'ор / or', description: 'Показывает уровень ора.' }
     }
 
     public init(bot: IBot, dataPath: string): void {

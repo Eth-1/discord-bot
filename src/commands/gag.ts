@@ -13,7 +13,7 @@ export default class GagCommand implements IBotCommand {
     public getHelp(): IBotCommandHelp {
         return {
             caption: '/gag ключевые слова',
-            description: 'Показ одной смешной картинки. Если не указаны ключевые слова - буду искать сиськи.'
+            description: 'Показ картинки c 9gag. Если не указаны ключевые слова - буду искать сиськи.'
         }
     }
 

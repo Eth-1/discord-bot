@@ -3,6 +3,7 @@
     "commands": [
         "help",
         "haipit-news",
+        "lurk",
         "wiki",
         "habr",
         "choice",

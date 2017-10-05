@@ -2,7 +2,7 @@ import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 import { getRandomInt } from '../utils'
 
 export default class RandomNumberCommand implements IBotCommand {
-    private readonly CMD_REGEXP = /^\/biba|b|биба|б(?: |$)/im
+    private readonly CMD_REGEXP = /^\/(biba|b|биба|б)(?: |$)/im
 
     public getHelp(): IBotCommandHelp {
         return { caption: '/biba /b /биба /б', description: 'Выводит размер бибы.' }

@@ -1,14 +1,12 @@
 {
   "name": "discordbot-ts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple discord bot",
   "main": "dist/index.js",
   "scripts": {
     "watch": "node_modules/.bin/tsc -w",
     "build": "node_modules/.bin/tsc",
-    "start": "node dist/index.js",
-    "pm2": "pm2 start --name \"discord-bot\" ./dist/index.js",
-    "pm2-docker": "pm2-docker --name \"discord-bot\" ./dist/index.js"
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "Leopotam <leopotam@gmail.com> (https://github.com/Leopotam)",

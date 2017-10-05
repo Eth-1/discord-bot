@@ -2,7 +2,7 @@ import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 import { getRandomInt } from '../utils'
 
 export default class KekCommand implements IBotCommand {
-    private readonly CMD_REGEXP = /(kek|кек)(?:[ \.,]||$)/im
+    private readonly CMD_REGEXP = /^(kek|кек)(?: |$)/im
     private _variants: string[]
 
     public getHelp(): IBotCommandHelp {

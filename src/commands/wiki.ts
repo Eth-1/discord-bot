@@ -33,7 +33,7 @@ export default class WikiCommand implements IBotCommand {
             answer.setTextOnly('укажи ключевые слова')
             return
         }
-        const lang = matches[1].toLowerCase() === 'вики' ? 'ru' : 'en'
+        const lang = matches[1].toLowerCase() === 'вики' || 'в' ? 'ru' : 'en'
         try {
             const url = `https://${lang}${this.API_URL}${qs.escape(keywords)}`
             const response = await fetch(url, { timeout: this.TIMEOUT })

@@ -3,18 +3,18 @@ import fetch from 'node-fetch'
 import * as qs from 'querystring'
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 
-export default class HabrCommand implements IBotCommand {
-    private readonly API_URL1 = 'https://habrahabr.ru/search/?q='
-    private readonly API_URL2 = 'https://habrahabr.ru/top/'
-    private readonly CMD_REGEXP = /^\/(habr|хабр)(?: |$)/im
+export default class PikabuCommand implements IBotCommand {
+    private readonly API_URL1 = 'https://pikabu.ru/search.php?q='
+    private readonly API_URL2 = 'https://pikabu.ru/'
+    private readonly CMD_REGEXP = /^\/(pikabu|пикабу)(?: |$)/im
     private readonly TIMEOUT = 5000
     private readonly LIMIT = 5
     private _bot: IBot
 
     public getHelp(): IBotCommandHelp {
         return {
-            caption: '/habr /хабр [ключевые слова]',
-            description: 'Новости с habrahabr. Если не указаны ключевые слова - будут показаны последние новости.'
+            caption: '/pikabu /пикабу [ключевые слова]',
+            description: 'Статьи с pikabu.ru. Если не указаны ключевые слова - будут показаны последние.'
         }
     }
 
@@ -34,7 +34,7 @@ export default class HabrCommand implements IBotCommand {
             const response = await fetch(url, { timeout: this.TIMEOUT })
             const html = await response.text()
             const $ = cheerio.load(html)
-            const posts = $('.post__title_link')
+            const posts = $('.story__title-link')
             const max = Math.min(this.LIMIT, posts.length)
             if (max > 0) {
                 for (let i = 0; i < max; i++) {

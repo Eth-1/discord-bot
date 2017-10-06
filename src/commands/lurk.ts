@@ -4,17 +4,17 @@ import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 
 interface IWikiList { [key: string]: { title: string, fullurl: string } }
 
-export default class WikiCommand implements IBotCommand {
-    private readonly API_URL = '.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&titles='
-    private readonly CMD_REGEXP = /^\/(wiki|w|вики|в)(?: |$)/im
+export default class LurkCommand implements IBotCommand {
+    private readonly API_URL = 'https://lurkmore.to/api.php?action=query&prop=info&inprop=url&format=json&titles='
+    private readonly CMD_REGEXP = /^\/(lurk|l|лурк|л)(?: |$)/im
     private readonly TIMEOUT = 5000
     private readonly LIMIT = 5
     private _bot: IBot
 
     public getHelp(): IBotCommandHelp {
         return {
-            caption: '/wiki /w /вики /в {ключевые слова}',
-            description: 'Поиск по википедии: /wiki - по английской, /вики - по русской.'
+            caption: '/lurk /l /лурк /л {ключевые слова}',
+            description: 'Поиск по lurkmore.'
         }
     }
 
@@ -33,10 +33,8 @@ export default class WikiCommand implements IBotCommand {
             answer.setTextOnly('укажи ключевые слова')
             return
         }
-        const lang = matches[1].toLowerCase() === 'вики' || 'в' ? 'ru' : 'en'
         try {
-            const url = `https://${lang}${this.API_URL}${qs.escape(keywords)}`
-            const response = await fetch(url, { timeout: this.TIMEOUT })
+            const response = await fetch(`${this.API_URL}${qs.escape(keywords)}`, { timeout: this.TIMEOUT })
             const rawData = await response.json()
             if (rawData) {
                 const list = rawData.query.pages as IWikiList

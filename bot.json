@@ -3,15 +3,21 @@
     "commands": [
         "help",
         "haipit-news",
+        "lurk",
         "wiki",
         "habr",
         "choice",
         "kek",
         "kill",
+        "biba",
         "growl",
         "random-number",
         "fsb",
-        "sources"
+        "gag",
+        "comics",
+        "pikabu",
+        "sources",
+        "fire"
     ],
     "token": "create bot.prod.json at same folder and put discord token to 'token' property inside"
 }

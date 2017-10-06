@@ -1,5 +1,5 @@
 # Typescript discord bot.
-Typescript reimplementation of [another bot](https://github.com/z81/discordbot).
+Typescript "answer" to [another bot](https://github.com/z81/discordbot).
 ## Installation
 ```
 npm install

@@ -1,11 +1,11 @@
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 import { getRandomInt } from '../utils'
 
-export default class ChoiceCommand implements IBotCommand {
-    private readonly CMD_REGEXP = / или /gi
+export default class RandomNumberCommand implements IBotCommand {
+    private readonly CMD_REGEXP = /^\/(biba|b|биба|б)(?: |$)/im
 
     public getHelp(): IBotCommandHelp {
-        return { caption: '{1} или {2}', description: 'Выбирает случайный вариант 1 или 2.' }
+        return { caption: '/biba /b /биба /б', description: 'Выводит размер бибы.' }
     }
 
     public init(bot: IBot, dataPath: string): void { }
@@ -14,7 +14,6 @@ export default class ChoiceCommand implements IBotCommand {
         return this.CMD_REGEXP.test(msg)
     }
     public async process(msg: string, answer: IBotMessage): Promise<void> {
-        const matches = msg.replace('?', '').split(this.CMD_REGEXP)
-        answer.setTextOnly(matches[getRandomInt(0, matches.length - 1)])
+        answer.setTextOnly(`размер твоей бибы - ${getRandomInt(1, 50)}см.`)
     }
 }

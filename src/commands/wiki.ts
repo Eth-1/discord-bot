@@ -13,7 +13,7 @@ export default class WikiCommand implements IBotCommand {
     public getHelp(): IBotCommandHelp {
         return {
             caption: '/wiki /w /вики /в {ключевые слова}',
-            description: 'Поиск по википедии: /wiki - по английской, /вики - по русской.'
+            description: 'Поиск по википедии: /wiki /w - по английской, /вики /в - по русской.'
         }
     }
 
@@ -32,7 +32,8 @@ export default class WikiCommand implements IBotCommand {
             answer.setTextOnly('укажи ключевые слова')
             return
         }
-        const lang = matches[1].toLowerCase() === 'вики' || 'в' ? 'ru' : 'en'
+        const cmd = matches[1].toLowerCase()
+        const lang = cmd === 'вики' || cmd === 'в' ? 'ru' : 'en'
         try {
             const url = `https://${lang}${this.API_URL}${qs.escape(keywords)}`
             const response = await fetch(url, { timeout: this.TIMEOUT })

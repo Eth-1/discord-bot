@@ -2,13 +2,12 @@ import fetch, { Request } from 'node-fetch'
 import * as qs from 'querystring'
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
 
-interface IWikiList { [key: string]: { title: string, fullurl: string } }
+interface IWikiList { [key: string]: { fullurl: string } }
 
 export default class WikiCommand implements IBotCommand {
     private readonly API_URL = '.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&titles='
     private readonly CMD_REGEXP = /^\/(wiki|w|вики|в)(?: |$)/im
     private readonly TIMEOUT = 5000
-    private readonly LIMIT = 5
     private _bot: IBot
 
     public getHelp(): IBotCommandHelp {
@@ -41,14 +40,10 @@ export default class WikiCommand implements IBotCommand {
             if (rawData) {
                 const list = rawData.query.pages as IWikiList
                 const pages = Object.keys(list)
-                if (pages.length > 0 && pages[0] === '-1') {
+                if (pages.length === 0 || pages[0] === '-1') {
                     answer.setTextOnly('Нет данных')
-                    return
-                }
-                const max = Math.min(this.LIMIT, pages.length)
-                for (let i = 0; i < max; i++) {
-                    const page = list[pages[i]]
-                    answer.addField(page.fullurl, page.title)
+                } else {
+                    answer.setTextOnly(list[pages[0]].fullurl)
                 }
             } else {
                 answer.setTextOnly('Нет данных')

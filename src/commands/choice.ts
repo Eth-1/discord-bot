@@ -11,6 +11,7 @@ export default class ChoiceCommand implements IBotCommand {
     public init(bot: IBot, dataPath: string): void { }
 
     public isValid(msg: string): boolean {
+        this.CMD_REGEXP.lastIndex = 0
         return this.CMD_REGEXP.test(msg)
     }
     public async process(msg: string, answer: IBotMessage): Promise<void> {

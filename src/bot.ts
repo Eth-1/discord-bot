@@ -34,6 +34,9 @@ export class Bot implements IBot {
             if (this._config.game) {
                 this._client.user.setGame(this._config.game)
             }
+            if (this._config.username && this._client.user.username !== this._config.username) {
+                this._client.user.setUsername(this._config.username)
+            }
             this._client.user.setStatus('online')
             this._logger.info('started...')
         })
@@ -46,8 +49,16 @@ export class Bot implements IBot {
                     try {
                         if (cmd.isValid(text)) {
                             const answer = new BotMessage()
-                            await cmd.process(text, answer)
-                            message.reply(answer.text || { embed: answer.richText })
+                            if (!this._config.idiots || !this._config.idiots.includes(message.author.id)) {
+                                await cmd.process(text, answer)
+                            } else {
+                                if (this._config.idiotAnswer) {
+                                    answer.setTextOnly(this._config.idiotAnswer)
+                                }
+                            }
+                            if (answer.isValid()) {
+                                message.reply(answer.text || { embed: answer.richText })
+                            }
                             break
                         }
                     } catch (ex) {

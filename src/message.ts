@@ -5,6 +5,10 @@ export class BotMessage implements IBotMessage {
     public richText?: RichEmbed
     public text?: string
 
+    public isValid(): boolean {
+        return !!this.text || !!this.richText
+    }
+
     public setTextOnly(text: string): IBotMessage {
         if (this.richText) { throw new Error('one of rich text methods was used') }
         this.text = text

@@ -14,6 +14,9 @@ export interface IBotConfig {
     token: string
     commands: string[]
     game?: string
+    username?: string
+    idiots?: string[]
+    idiotAnswer?: string
 }
 
 export interface IBotCommandHelp {

@@ -1,6 +1,6 @@
 {
   "name": "discordbot-ts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple discord bot",
   "main": "dist/index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/cheerio": "^0.22.2",
-    "@types/node": "^8.0.32",
+    "@types/node": "^8.0.33",
     "@types/node-fetch": "^1.6.7",
     "tslint": "^5.7.0",
     "typescript": "^2.5.3"

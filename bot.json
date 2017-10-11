@@ -1,5 +1,5 @@
 {
-    "game": "супер-бота",
+    "game": "",
     "commands": [
         "help",
         "haipit-news",
@@ -19,5 +19,7 @@
         "sources",
         "fire"
     ],
-    "token": "create bot.prod.json at same folder and put discord token to 'token' property inside"
+    "token": "create bot.prod.json at same folder and put discord token to 'token' property inside",
+    "idiots": [],
+    "idiotAnswer": ""
 }

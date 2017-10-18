@@ -1,6 +1,6 @@
 import fetch, { Request } from 'node-fetch'
 import { IBot, IBotCommand, IBotCommandHelp, IBotMessage } from '../api'
-import { getRandomInt, getUserString } from '../utils'
+import { getRandomInt } from '../utils'
 
 interface IComicsInfo {
     num: number

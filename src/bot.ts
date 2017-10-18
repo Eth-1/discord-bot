@@ -48,7 +48,7 @@ export class Bot implements IBot {
                 for (const cmd of this._commands) {
                     try {
                         if (cmd.isValid(text)) {
-                            const answer = new BotMessage()
+                            const answer = new BotMessage(message.author)
                             if (!this._config.idiots || !this._config.idiots.includes(message.author.id)) {
                                 await cmd.process(text, answer)
                             } else {

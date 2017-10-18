@@ -52,6 +52,7 @@ type MessageColor =
     | string
 
 export interface IBotMessage {
+    readonly user: IUser
     setTextOnly(text: string): IBotMessage
     addField(name: string, value: string): IBotMessage
     addBlankField(): IBotMessage

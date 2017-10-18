@@ -1,9 +1,14 @@
 import { RichEmbed } from 'discord.js'
-import { IBotMessage } from './api'
+import { IBotMessage, IUser } from './api'
 
 export class BotMessage implements IBotMessage {
+    public readonly user: IUser
     public richText?: RichEmbed
     public text?: string
+
+    constructor(user: IUser) {
+        this.user = user
+    }
 
     public isValid(): boolean {
         return !!this.text || !!this.richText
